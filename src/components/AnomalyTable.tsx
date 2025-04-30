@@ -118,8 +118,8 @@ const VoteBadge = ({ votes }: { votes: number }) => {
 };
 
 const AnomalyTable = () => {
-  const exportCSV = (modelName: string, sessionId: string) => {
-    console.log(`Exporting ${modelName} data for session ${sessionId}`);
+  const exportCSV = (sessionId: string = 'all') => {
+    console.log(`Exporting all model data for session ${sessionId}`);
     // In a real app, this would trigger an API call to download the CSV
   };
   
@@ -130,7 +130,7 @@ const AnomalyTable = () => {
         <Button 
           variant="outline" 
           className="border-gray-700 hover:bg-gray-800 text-white"
-          onClick={() => exportCSV('consensus', 'all')}
+          onClick={() => exportCSV()}
         >
           <Download size={16} className="mr-2" />
           Export All (CSV)
@@ -151,7 +151,7 @@ const AnomalyTable = () => {
               <TableHead className="text-gray-400 font-medium">Isolation</TableHead>
               <TableHead className="text-gray-400 font-medium">GMM</TableHead>
               <TableHead className="text-gray-400 font-medium">Votes</TableHead>
-              <TableHead className="text-gray-400 font-medium text-right">Actions</TableHead>
+              <TableHead className="text-gray-400 font-medium text-right">Export</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -173,40 +173,15 @@ const AnomalyTable = () => {
                     <VoteBadge votes={voteCount} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex justify-end space-x-2">
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="text-xs text-gray-400 hover:text-white"
-                        onClick={() => exportCSV('svm', anomaly.id)}
-                      >
-                        SVM
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="text-xs text-gray-400 hover:text-white"
-                        onClick={() => exportCSV('isolation', anomaly.id)}
-                      >
-                        ISO
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="text-xs text-gray-400 hover:text-white"
-                        onClick={() => exportCSV('gmm', anomaly.id)}
-                      >
-                        GMM
-                      </Button>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="text-xs text-white hover:text-dashboard-accent"
-                        onClick={() => exportCSV('consensus', anomaly.id)}
-                      >
-                        All
-                      </Button>
-                    </div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-white hover:text-dashboard-accent"
+                      onClick={() => exportCSV(anomaly.id)}
+                    >
+                      <Download size={14} className="mr-1" />
+                      CSV
+                    </Button>
                   </TableCell>
                 </TableRow>
               );

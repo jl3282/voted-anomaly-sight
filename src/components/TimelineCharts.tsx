@@ -100,6 +100,47 @@ const rateMetrics = [
   { value: "gmmRate", label: "GMM Rate" },
 ];
 
+// Generate mock data for different model rates
+const addModelRates = (data) => {
+  return data.map(item => ({
+    ...item,
+    svmRate: parseFloat((item.rate * (0.8 + Math.random() * 0.4)).toFixed(1)),
+    isoRate: parseFloat((item.rate * (0.7 + Math.random() * 0.6)).toFixed(1)),
+    gmmRate: parseFloat((item.rate * (0.9 + Math.random() * 0.3)).toFixed(1)),
+  }));
+};
+
+// Add model rates to all timeline datasets
+const timelineDataDailyWithRates = addModelRates(timelineDataDaily);
+const timelineDataWeeklyWithRates = addModelRates(timelineDataWeekly);
+const timelineDataMonthlyWithRates = addModelRates(timelineDataMonthly);
+
+// Filter data by job title (mock implementation)
+const filterDataByJob = (data, jobTitle) => {
+  if (jobTitle === "All Job Titles") return data;
+  
+  // For demonstration, we'll just adjust the rates by a factor based on job title
+  const jobFactors = {
+    "Software Engineer": 1.2,
+    "Data Analyst": 0.8,
+    "Product Manager": 1.1,
+    "UX Designer": 0.9,
+    "DevOps Engineer": 1.3,
+    "Marketing Specialist": 0.7,
+    "HR Manager": 0.6
+  };
+  
+  const factor = jobFactors[jobTitle] || 1;
+  
+  return data.map(item => ({
+    ...item,
+    rate: parseFloat((item.rate * factor).toFixed(1)),
+    svmRate: parseFloat((item.svmRate * factor).toFixed(1)),
+    isoRate: parseFloat((item.isoRate * factor).toFixed(1)),
+    gmmRate: parseFloat((item.gmmRate * factor).toFixed(1)),
+  }));
+};
+
 const TimelineCharts = () => {
   // State for selections
   const [selectedJob, setSelectedJob] = useState("All Job Titles");
@@ -109,14 +150,19 @@ const TimelineCharts = () => {
 
   // Get the appropriate data based on time period
   const getTimelineData = () => {
+    let baseData;
     switch (timePeriod) {
       case "7d":
-        return timelineDataWeekly;
+        baseData = timelineDataWeeklyWithRates;
+        break;
       case "30d":
-        return timelineDataMonthly;
+        baseData = timelineDataMonthlyWithRates;
+        break;
       default:
-        return timelineDataDaily;
+        baseData = timelineDataDailyWithRates;
     }
+    
+    return filterDataByJob(baseData, selectedJob);
   };
 
   // Get the appropriate key for x-axis based on time period
@@ -202,70 +248,69 @@ const TimelineCharts = () => {
   const renderRateChart = () => {
     const data = getTimelineData();
     const xKey = getXAxisKey();
+    
+    // Get color based on rate metric
+    const getColor = () => {
+      switch (rateMetric) {
+        case "svmRate": return "#3b82f6"; // blue
+        case "isoRate": return "#8b5cf6"; // purple
+        case "gmmRate": return "#f59e0b"; // amber
+        default: return "#ea384c"; // red
+      }
+    };
+    
+    // Get fill color based on rate metric (with opacity)
+    const getFillColor = () => {
+      switch (rateMetric) {
+        case "svmRate": return "rgba(59, 130, 246, 0.2)"; // blue with opacity
+        case "isoRate": return "rgba(139, 92, 246, 0.2)"; // purple with opacity
+        case "gmmRate": return "rgba(245, 158, 11, 0.2)"; // amber with opacity
+        default: return "rgba(234, 56, 76, 0.2)"; // red with opacity
+      }
+    };
+    
+    // Get metric name for display
+    const getMetricName = () => {
+      switch (rateMetric) {
+        case "svmRate": return "SVM Rate";
+        case "isoRate": return "Isolation Forest Rate";
+        case "gmmRate": return "GMM Rate";
+        default: return "Anomaly Rate";
+      }
+    };
 
     return (
       <ResponsiveContainer width="100%" height="100%">
-        {rateMetric === "rate" ? (
-          <LineChart
-            data={data}
-            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis 
-              dataKey={xKey}
-              stroke="#4b5563"
-              tick={{ fill: '#9ca3af' }}
-            />
-            <YAxis 
-              stroke="#4b5563"
-              tick={{ fill: '#9ca3af' }}
-              unit="%" 
-            />
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #374151', borderRadius: '0.375rem' }}
-              labelStyle={{ color: '#f3f4f6' }}
-              formatter={(value: number) => [`${value}%`, 'Anomaly Rate']}
-            />
-            <Legend wrapperStyle={{ color: '#9ca3af' }} />
-            <Line 
-              type="monotone" 
-              dataKey="rate" 
-              name="Anomaly Rate" 
-              stroke="#ea384c" 
-              dot={{ stroke: '#ea384c', strokeWidth: 2, r: 4, fill: '#1e293b' }}
-              activeDot={{ r: 6, stroke: '#ea384c', strokeWidth: 2, fill: '#ea384c' }}
-            />
-          </LineChart>
-        ) : (
-          <AreaChart
-            data={data}
-            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis 
-              dataKey={xKey}
-              stroke="#4b5563"
-              tick={{ fill: '#9ca3af' }}
-            />
-            <YAxis 
-              stroke="#4b5563"
-              tick={{ fill: '#9ca3af' }}
-              unit="%" 
-            />
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #374151', borderRadius: '0.375rem' }}
-              labelStyle={{ color: '#f3f4f6' }}
-            />
-            <Legend wrapperStyle={{ color: '#9ca3af' }} />
-            <Area 
-              type="monotone" 
-              dataKey="rate" 
-              name={rateMetric === "svmRate" ? "SVM Rate" : rateMetric === "isoRate" ? "Isolation Forest Rate" : "GMM Rate"} 
-              stroke={rateMetric === "svmRate" ? "#3b82f6" : rateMetric === "isoRate" ? "#8b5cf6" : "#f59e0b"} 
-              fill={rateMetric === "svmRate" ? "rgba(59, 130, 246, 0.2)" : rateMetric === "isoRate" ? "rgba(139, 92, 246, 0.2)" : "rgba(245, 158, 11, 0.2)"}
-            />
-          </AreaChart>
-        )}
+        <AreaChart
+          data={data}
+          margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+          <XAxis 
+            dataKey={xKey}
+            stroke="#4b5563"
+            tick={{ fill: '#9ca3af' }}
+          />
+          <YAxis 
+            stroke="#4b5563"
+            tick={{ fill: '#9ca3af' }}
+            unit="%" 
+          />
+          <Tooltip 
+            contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #374151', borderRadius: '0.375rem' }}
+            labelStyle={{ color: '#f3f4f6' }}
+            formatter={(value: number) => [`${value}%`, getMetricName()]}
+          />
+          <Legend wrapperStyle={{ color: '#9ca3af' }} />
+          <Area 
+            type="monotone" 
+            dataKey={rateMetric} 
+            name={getMetricName()} 
+            stroke={getColor()} 
+            fill={getFillColor()}
+            activeDot={{ r: 6, stroke: getColor(), strokeWidth: 2, fill: getColor() }}
+          />
+        </AreaChart>
       </ResponsiveContainer>
     );
   };
@@ -319,7 +364,7 @@ const TimelineCharts = () => {
               </SelectContent>
             </Select>
           </div>
-          <Select defaultValue="all" onValueChange={setSelectedJob}>
+          <Select value={selectedJob} onValueChange={setSelectedJob}>
             <SelectTrigger className="w-[180px] bg-transparent border-gray-700 text-gray-300">
               <SelectValue />
             </SelectTrigger>
