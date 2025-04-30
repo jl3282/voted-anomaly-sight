@@ -115,7 +115,7 @@ const AnomalyTable = () => {
   return <Card className="bg-dashboard-card border-gray-700 p-5">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-medium text-white">Recent Anomalous Sessions</h2>
-        <Button variant="outline" onClick={() => exportCSV()} className="border-gray-700 font-medium text-gray-50 text-base bg-gray-600 hover:bg-gray-500">
+        <Button variant="outline" onClick={() => exportCSV()} className="border-gray-700 hover:bg-gray-800 text-gray-200">
           <Download size={16} className="mr-2" />
           Export All (CSV)
         </Button>
@@ -155,7 +155,7 @@ const AnomalyTable = () => {
                     <VoteBadge votes={voteCount} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="text-white font-medium hover:text-dashboard-accent hover:bg-gray-800" onClick={() => exportCSV(anomaly.id)}>
+                    <Button variant="ghost" size="sm" className="text-white hover:text-dashboard-accent" onClick={() => exportCSV(anomaly.id)}>
                       <Download size={14} className="mr-1" />
                       CSV
                     </Button>
