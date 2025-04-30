@@ -1,97 +1,103 @@
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, CircleCheck, Download } from 'lucide-react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { 
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
 
 // Mock data for the table
-const recentAnomalies = [{
-  id: 'sess-123456',
-  timestamp: '2025-04-30T14:22:18',
-  user: 'John Smith',
-  jobTitle: 'Software Engineer',
-  duration: 0,
-  events: 28,
-  models: {
-    svm: true,
-    isolation: true,
-    gmm: true
-  }
-}, {
-  id: 'sess-123457',
-  timestamp: '2025-04-30T14:15:35',
-  user: 'Jane Doe',
-  jobTitle: 'Product Manager',
-  duration: 1,
-  events: 32,
-  models: {
-    svm: true,
-    isolation: true,
-    gmm: false
-  }
-}, {
-  id: 'sess-123458',
-  timestamp: '2025-04-30T14:09:12',
-  user: 'Mark Johnson',
-  jobTitle: 'UX Designer',
-  duration: 0,
-  events: 26,
-  models: {
-    svm: true,
-    isolation: true,
-    gmm: true
-  }
-}, {
-  id: 'sess-123459',
-  timestamp: '2025-04-30T13:58:47',
-  user: 'Lisa Chen',
-  jobTitle: 'Data Analyst',
-  duration: 2,
-  events: 15,
-  models: {
-    svm: true,
-    isolation: false,
-    gmm: true
-  }
-}, {
-  id: 'sess-123460',
-  timestamp: '2025-04-30T13:45:29',
-  user: 'Robert Garcia',
-  jobTitle: 'DevOps Engineer',
-  duration: 1,
-  events: 30,
-  models: {
-    svm: true,
-    isolation: true,
-    gmm: false
-  }
-}];
+const recentAnomalies = [
+  {
+    id: 'sess-123456',
+    timestamp: '2025-04-30T14:22:18',
+    user: 'John Smith',
+    jobTitle: 'Software Engineer',
+    duration: 0,
+    events: 28,
+    models: {
+      svm: true,
+      isolation: true,
+      gmm: true
+    }
+  },
+  {
+    id: 'sess-123457',
+    timestamp: '2025-04-30T14:15:35',
+    user: 'Jane Doe',
+    jobTitle: 'Product Manager',
+    duration: 1,
+    events: 32,
+    models: {
+      svm: true,
+      isolation: true,
+      gmm: false
+    }
+  },
+  {
+    id: 'sess-123458',
+    timestamp: '2025-04-30T14:09:12',
+    user: 'Mark Johnson',
+    jobTitle: 'UX Designer',
+    duration: 0,
+    events: 26,
+    models: {
+      svm: true,
+      isolation: true,
+      gmm: true
+    }
+  },
+  {
+    id: 'sess-123459',
+    timestamp: '2025-04-30T13:58:47',
+    user: 'Lisa Chen',
+    jobTitle: 'Data Analyst',
+    duration: 2,
+    events: 15,
+    models: {
+      svm: true,
+      isolation: false,
+      gmm: true
+    }
+  },
+  {
+    id: 'sess-123460',
+    timestamp: '2025-04-30T13:45:29',
+    user: 'Robert Garcia',
+    jobTitle: 'DevOps Engineer',
+    duration: 1,
+    events: 30,
+    models: {
+      svm: true,
+      isolation: true,
+      gmm: false
+    }
+  },
+];
+
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
-  return date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 };
-const ModelCheck = ({
-  checked
-}: {
-  checked: boolean;
-}) => {
+
+const ModelCheck = ({ checked }: { checked: boolean }) => {
   if (checked) {
     return <CircleCheck size={16} className="text-green-500" />;
   }
   return <span className="text-gray-400">—</span>;
 };
-const VoteBadge = ({
-  votes
-}: {
-  votes: number;
-}) => {
+
+const VoteBadge = ({ votes }: { votes: number }) => {
   let bgColor = '';
   let textColor = 'text-white';
+  
   switch (votes) {
     case 3:
       bgColor = 'bg-anomaly-critical';
@@ -102,20 +108,30 @@ const VoteBadge = ({
     default:
       bgColor = 'bg-anomaly-medium';
   }
-  return <Badge className={`${bgColor} ${textColor}`}>
+  
+  return (
+    <Badge className={`${bgColor} ${textColor}`}>
       {votes === 3 && <AlertTriangle size={12} className="mr-1" />}
       {votes} votes
-    </Badge>;
+    </Badge>
+  );
 };
+
 const AnomalyTable = () => {
   const exportCSV = (sessionId: string = 'all') => {
     console.log(`Exporting all model data for session ${sessionId}`);
     // In a real app, this would trigger an API call to download the CSV
   };
-  return <Card className="bg-dashboard-card border-gray-700 p-5">
+  
+  return (
+    <Card className="bg-dashboard-card border-gray-700 p-5">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-medium text-white">Recent Anomalous Sessions</h2>
-        <Button variant="outline" onClick={() => exportCSV()} className="border-gray-700 hover:bg-gray-800 font-medium text-gray-50">
+        <Button 
+          variant="outline" 
+          className="border-gray-700 hover:bg-gray-800 text-white"
+          onClick={() => exportCSV()}
+        >
           <Download size={16} className="mr-2" />
           Export All (CSV)
         </Button>
@@ -139,9 +155,11 @@ const AnomalyTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {recentAnomalies.map(anomaly => {
-            const voteCount = Object.values(anomaly.models).filter(Boolean).length;
-            return <TableRow key={anomaly.id} className="border-b border-gray-700">
+            {recentAnomalies.map((anomaly) => {
+              const voteCount = Object.values(anomaly.models).filter(Boolean).length;
+              
+              return (
+                <TableRow key={anomaly.id} className="border-b border-gray-700">
                   <TableCell className="font-mono text-sm text-gray-300">{anomaly.id}</TableCell>
                   <TableCell className="text-gray-300">{formatDate(anomaly.timestamp)}</TableCell>
                   <TableCell className="text-white">{anomaly.user}</TableCell>
@@ -155,16 +173,24 @@ const AnomalyTable = () => {
                     <VoteBadge votes={voteCount} />
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm" className="text-white font-medium hover:text-dashboard-accent hover:bg-gray-800" onClick={() => exportCSV(anomaly.id)}>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-white hover:text-dashboard-accent"
+                      onClick={() => exportCSV(anomaly.id)}
+                    >
                       <Download size={14} className="mr-1" />
                       CSV
                     </Button>
                   </TableCell>
-                </TableRow>;
-          })}
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>
-    </Card>;
+    </Card>
+  );
 };
+
 export default AnomalyTable;
