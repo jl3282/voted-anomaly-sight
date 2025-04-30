@@ -93,12 +93,10 @@ const TimelineCharts = () => {
                 dataKey="hour" 
                 tick={{ fill: '#9ca3af' }} 
                 stroke="#4b5563"
-                tick={{fill: '#9ca3af'}}
               />
               <YAxis 
                 tick={{ fill: '#9ca3af' }}
                 stroke="#4b5563"
-                tick={{fill: '#9ca3af'}}
               />
               <Tooltip 
                 contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #374151', borderRadius: '0.375rem' }}
