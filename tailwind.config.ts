@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,19 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for anomaly detection
+				anomaly: {
+					critical: '#ea384c',   // Three votes - bright red
+					high: '#dc2626',       // Two votes - solid red
+					medium: '#f59e0b',     // One vote - amber/yellow
+					none: '#6b7280',       // No votes - gray
+				},
+				dashboard: {
+					background: '#0f172a', // Dark navy
+					card: '#1e293b',       // Slightly lighter navy
+					accent: '#06b6d4',     // Teal for metrics
+					muted: '#475569',      // Muted text
 				}
 			},
 			borderRadius: {
@@ -84,11 +98,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-alert': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.6' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-alert': 'pulse-alert 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
 			}
 		}
 	},
