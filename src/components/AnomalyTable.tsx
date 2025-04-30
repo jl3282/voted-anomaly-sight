@@ -115,7 +115,7 @@ const AnomalyTable = () => {
   return <Card className="bg-dashboard-card border-gray-700 p-5">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-medium text-white">Recent Anomalous Sessions</h2>
-        <Button variant="outline" onClick={() => exportCSV()} className="border-gray-700 hover:bg-gray-800 font-medium text-gray-50">
+        <Button variant="outline" onClick={() => exportCSV()} className="border-gray-700 font-medium text-gray-50 text-base bg-gray-600 hover:bg-gray-500">
           <Download size={16} className="mr-2" />
           Export All (CSV)
         </Button>
