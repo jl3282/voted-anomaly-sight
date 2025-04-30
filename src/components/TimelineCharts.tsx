@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { 
@@ -194,6 +193,19 @@ const TimelineCharts = () => {
               dataKey={xKey} 
               tick={{ fill: '#9ca3af' }} 
               stroke="#4b5563"
+              height={30}
+              angle={0}
+              textAnchor="middle"
+              interval={0}
+              // Adjust the tick size if needed for small screens
+              tickSize={4}
+              tickFormatter={(value) => {
+                // Keep time format shorter if needed
+                if (timePeriod === "24h" && value.length > 3) {
+                  return value;
+                }
+                return value;
+              }}
             />
             <YAxis 
               tick={{ fill: '#9ca3af' }}
@@ -216,6 +228,19 @@ const TimelineCharts = () => {
               dataKey={xKey} 
               tick={{ fill: '#9ca3af' }} 
               stroke="#4b5563"
+              height={30}
+              angle={0}
+              textAnchor="middle"
+              interval={0}
+              // Adjust the tick size if needed for small screens
+              tickSize={4}
+              tickFormatter={(value) => {
+                // Keep time format shorter if needed
+                if (timePeriod === "24h" && value.length > 3) {
+                  return value;
+                }
+                return value;
+              }}
             />
             <YAxis 
               tick={{ fill: '#9ca3af' }}
@@ -290,6 +315,19 @@ const TimelineCharts = () => {
             dataKey={xKey}
             stroke="#4b5563"
             tick={{ fill: '#9ca3af' }}
+            height={30}
+            angle={0}
+            textAnchor="middle"
+            interval={0}
+            // Adjust the tick size if needed for small screens
+            tickSize={4}
+            tickFormatter={(value) => {
+              // Keep time format shorter if needed
+              if (timePeriod === "24h" && value.length > 3) {
+                return value;
+              }
+              return value;
+            }}
           />
           <YAxis 
             stroke="#4b5563"
