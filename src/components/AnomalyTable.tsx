@@ -129,7 +129,7 @@ const AnomalyTable = () => {
         <h2 className="text-lg font-medium text-white">Recent Anomalous Sessions</h2>
         <Button 
           variant="outline" 
-          className="border-gray-700 hover:bg-gray-800 text-gray-300"
+          className="border-gray-700 hover:bg-gray-800 text-white font-medium"
           onClick={() => exportCSV()}
         >
           <Download size={16} className="mr-2" />
@@ -176,7 +176,7 @@ const AnomalyTable = () => {
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="text-gray-300 hover:text-dashboard-accent hover:bg-gray-800"
+                      className="text-white font-medium hover:text-dashboard-accent hover:bg-gray-800"
                       onClick={() => exportCSV(anomaly.id)}
                     >
                       <Download size={14} className="mr-1" />
