@@ -1,73 +1,54 @@
-# Welcome to your Lovable project
+# Voted Anomaly Detection Dashboard
 
-## Project info
+A real-time visualization dashboard demonstrating the capabilities of a multi-model voting system for anomaly detection. This dashboard provides a public interface to showcase how our ensemble-based anomaly detection system works, using simulated data that mirrors real-world patterns.
 
-**URL**: https://lovable.dev/projects/fbd56185-9812-4f0e-b70a-e4ea769b34c9
+> **Note**: This repository contains only the visualization dashboard with simulated data. The actual machine learning models and analysis system are maintained in a private repository due to the confidential nature of the training data and security implications.
 
-## How can I edit this code?
+## 🔍 Overview
 
-There are several ways of editing your application.
+This dashboard demonstrates an anomaly detection system that combines three machine learning models:
 
-**Use Lovable**
+1. **One-Class SVM** - Support Vector Machine for novelty detection
+2. **Isolation Forest** - Tree-based anomaly detection using path lengths
+3. **Gaussian Mixture Model (GMM)** - Statistical model for density estimation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fbd56185-9812-4f0e-b70a-e4ea769b34c9) and start prompting.
+The system uses a voting mechanism where predictions from all three models are combined to improve detection accuracy and reduce false positives.
 
-Changes made via Lovable will be committed automatically to this repo.
 
-**Use your preferred IDE**
+## Technical Architecture
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Frontend Stack
+- **React 18** with TypeScript
+- **Vite** for blazing-fast development
+- **shadcn/ui** + Tailwind CSS for modern UI
+- **Recharts** for interactive visualizations
+- **TanStack Query** for data management
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Features
+- Real-time statistics and voting results
+- Interactive timeline and scatter plot visualizations
+- Detailed anomaly tables with export functionality
+- Model agreement analysis
+- Feature importance visualization
 
-Follow these steps:
+## Quick Start
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Local Development
+```bash
+# Install dependencies
+npm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The dashboard will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Production Build
+```bash
+npm run build
+npm run preview
+```
 
-**Use GitHub Codespaces**
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/fbd56185-9812-4f0e-b70a-e4ea769b34c9) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
