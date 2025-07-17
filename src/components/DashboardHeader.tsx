@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -73,34 +74,34 @@ const DashboardHeader = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatsCard 
           title="Total Sessions" 
-          value={29359} 
+          value={1259} 
           subtitle="Last 24 hours"
         />
         <StatsCard 
           title="One-Class SVM" 
-          value={394} 
-          subtitle="1.34% detection rate"
+          value={52} 
+          subtitle="Flagged sessions"
           isAnomaly
           variation="medium"
         />
         <StatsCard 
           title="Isolation Forest" 
-          value={292} 
-          subtitle="0.99% detection rate"
+          value={47} 
+          subtitle="Flagged sessions"
           isAnomaly
           variation="medium"
         />
         <StatsCard 
           title="GMM" 
-          value={294} 
-          subtitle="1.00% detection rate"
+          value={38} 
+          subtitle="Flagged sessions"
           isAnomaly
           variation="medium"
         />
         <StatsCard 
           title="Voted Anomalies" 
-          value={192} 
-          subtitle="0.65% final rate (≥2 votes)"
+          value={23} 
+          subtitle="≥2 votes"
           isAnomaly
           variation="critical"
         />
